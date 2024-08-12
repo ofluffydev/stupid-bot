@@ -5,16 +5,21 @@
   "license": "MIT",
   "scripts": {
     "start": "ts-node index.ts",
-    "lint": "eslint . --ext .ts",
+    "lint": "eslint .",
     "format": "yarn prettier . --write"
   },
   "dependencies": {
     "discord.js": "^14.15.3",
+    "ms": "3.0.0-canary.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4"
   },
   "devDependencies": {
-    "eslint": "^9.9.0",
-    "prettier": "3.3.3"
+    "@eslint/js": "^9.9.0",
+    "@types/ms": "^0.7.34",
+    "eslint": "9.x",
+    "globals": "^15.9.0",
+    "prettier": "3.3.3",
+    "typescript-eslint": "^8.0.1"
   }
 }

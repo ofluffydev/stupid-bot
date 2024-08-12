@@ -1,0 +1,6 @@
+{
+  "compilerOptions": {
+    // "allowSyntheticDefaultImports": false
+  },
+  "exclude": ["node_modules"]
+}
