@@ -9,11 +9,12 @@ import {
 import 'dotenv/config';
 import { readdirSync } from 'node:fs';
 import { join } from 'node:path';
+import './scripts/deploy-commands'; // Automatically deploy/update application commands
 
 const token = process.env.DISCORD_TOKEN;
 
 if (!token) {
-  console.error('Token is required to run this example.');
+  console.error('DISCORD_TOKEN is required in the environment variables.');
   process.exit(1);
 }
 
@@ -96,3 +97,11 @@ client.on(Events.InteractionCreate, async (interaction: Interaction) => {
 });
 
 client.login(token);
+
+const date = new Date();
+
+const day = date.getDate();
+const month = date.getMonth() + 1;
+const year = date.getFullYear();
+
+export const startTime = `${day}-${month}-${year}`;

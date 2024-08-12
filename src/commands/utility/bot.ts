@@ -1,43 +1,37 @@
 import {
   ChatInputCommandInteraction,
+  Client,
   EmbedBuilder,
   GuildMember,
   SlashCommandBuilder,
 } from 'discord.js';
+import ms from 'ms';
+import { startTime } from '../..';
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName('user')
-    .setDescription('Provides information about the user.')
-    .addUserOption((option) =>
-      option
-        .setName('user')
-        .setDescription(
-          'User to get info on, defaults to the user running the command.',
-        )
-        .setRequired(false),
-    ),
+    .setName('bot')
+    .setDescription('Provides information about the bot.'),
   async execute(interaction: ChatInputCommandInteraction) {
     if (!interaction.inGuild()) {
       return interaction.reply('This command can only be used in a server.');
     }
 
-    const user = interaction.options.getUser('user');
-    const member = user
-      ? ((await interaction.guild?.members.fetch(user)) as GuildMember)
-      : (interaction.member as GuildMember);
-    const name = member.user.username;
-    const joinedAt = member.joinedAt
-      ? member.joinedAt.toDateString()
-      : 'Unknown';
+    const member = interaction.member as GuildMember;
+    // Get the current bot name
+    const client = interaction.client;
+    const name = client.user.username;
+    const runningSince: string = startTime;
+    const uptime = getUptime(client);
 
     const serverName = interaction.guild?.name;
 
-    const profilePicture = member.user.displayAvatarURL();
+    const profilePicture = client.user.displayAvatarURL();
     const embed = new EmbedBuilder()
       .setColor(0xbe2ed6)
       .setTitle(name)
-      .addFields({ name: 'Join Date', value: joinedAt })
+      .addFields({ name: 'Running Since', value: runningSince })
+      .addFields({ name: 'Uptime', value: ms(uptime) })
       .setImage(profilePicture)
       .setTimestamp()
       .setFooter({
@@ -52,3 +46,9 @@ module.exports = {
     }
   },
 };
+function getUptime(client: Client) {
+  const currentTime = new Date().getTime();
+  const readyAt = client.readyAt?.getTime() ?? new Date().getTime();
+  const uptime = currentTime - readyAt;
+  return uptime;
+}

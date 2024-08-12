@@ -56,3 +56,5 @@ export async function add_commands() {
     console.log(command.name);
   }
 }
+
+add_commands();
