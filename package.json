@@ -1,25 +1,31 @@
 {
+  "$schema": "https://json.schemastore.org/package.json",
   "name": "stupid-bot",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "start": "ts-node index.ts",
-    "lint": "eslint .",
-    "format": "yarn prettier . --write"
+    "build": "tsc",
+    "start": "node --require dotenv/config dist/index.js",
+    "lint": "prettier --check . && eslint --ext .ts --format=pretty src",
+    "format": "prettier --write . && eslint --fix --format=pretty src",
+    "dev": "ts-node --project tsconfig.json src/index.ts",
+    "commands": "ts-node --project tsconfig.json src/scripts/deploy-commands.ts"
   },
   "dependencies": {
-    "discord.js": "^14.15.3",
+    "@discordjs/core": "^1.2.0",
+    "discord.js": "^14.15.0",
+    "dotenv": "^16.3.1",
     "ms": "3.0.0-canary.1",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.5.4"
+    "prettier-plugin-organize-imports": "^4.0.0",
+    "typescript-eslint": "^8.0.1"
   },
   "devDependencies": {
-    "@eslint/js": "^9.9.0",
-    "@types/ms": "^0.7.34",
-    "eslint": "9.x",
-    "globals": "^15.9.0",
-    "prettier": "3.3.3",
-    "typescript-eslint": "^8.0.1"
+    "@sapphire/ts-config": "^5.0.1",
+    "@types/node": "^18.18.8",
+    "eslint": "^8.53.0",
+    "eslint-formatter-pretty": "^5.0.0",
+    "prettier": "^3.1.0",
+    "typescript": "^5.2.2",
+    "zod": "^3.22.4"
   }
 }

@@ -1,29 +1,25 @@
-import {
-  ChatInputCommandInteraction,
-  SlashCommandBuilder,
-  User,
-} from "discord.js";
+import { ChatInputCommandInteraction, SlashCommandBuilder } from 'discord.js';
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("kick")
-    .setDescription("Kick a user")
+    .setName('kick')
+    .setDescription('Kick a user')
     .addUserOption((option) =>
       option
-        .setName("user")
-        .setDescription("The user to kick")
+        .setName('user')
+        .setDescription('The user to kick')
         .setRequired(true),
     )
     .addStringOption((option) =>
-      option.setName("reason").setDescription("The reason for the kick"),
+      option.setName('reason').setDescription('The reason for the kick'),
     ),
   async execute(interaction: ChatInputCommandInteraction) {
-    const user = interaction.options.getUser("user");
+    const user = interaction.options.getUser('user');
     const reason =
-      interaction.options.getString("reason") ?? "No reason provided.";
+      interaction.options.getString('reason') ?? 'No reason provided.';
 
     if (!user) {
-      return interaction.reply("Please provide a user to ban.");
+      return interaction.reply('Please provide a user to ban.');
     }
 
     // Uncomment the next line to actually ban users, wouldn't wanna accidentally kick myself either :P
