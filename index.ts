@@ -1,8 +1,15 @@
 import { readdirSync } from "node:fs";
 import { join } from "node:path";
-import { Client, Collection, Events, GatewayIntentBits, Interaction, ChatInputCommandInteraction } from "discord.js";
+import {
+  Client,
+  Collection,
+  Events,
+  GatewayIntentBits,
+  Interaction,
+  ChatInputCommandInteraction,
+} from "discord.js";
 
-const {token} = require('./config.json');
+const { token } = require("./config.json");
 
 if (!token) {
   console.error("Token is required to run this example.");
@@ -32,7 +39,9 @@ const commandFolders = readdirSync(foldersPath);
 
 for (const folder of commandFolders) {
   const commandsPath = join(foldersPath, folder);
-  const commandFiles = readdirSync(commandsPath).filter((file) => file.endsWith(".ts") || file.endsWith(".js"));
+  const commandFiles = readdirSync(commandsPath).filter(
+    (file) => file.endsWith(".ts") || file.endsWith(".js"),
+  );
   for (const file of commandFiles) {
     const filePath = join(commandsPath, file);
     const command = require(filePath) as Command;
@@ -41,7 +50,7 @@ for (const folder of commandFolders) {
       console.log(`  - Registered command: ${command.data.name}`);
     } else {
       console.log(
-        `[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`
+        `[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`,
       );
     }
   }
@@ -52,7 +61,7 @@ client.once(Events.ClientReady, (readyClient) => {
   // Print information about the server the bot is connected to
   console.log(`Connected to ${readyClient.guilds.cache.size} servers:`);
   readyClient.guilds.cache.forEach((guild) => {
-	console.log(`  - ${guild.name} (ID: ${guild.id})`);
+    console.log(`  - ${guild.name} (ID: ${guild.id})`);
   });
   console.log("Registered commands:");
   client.commands.forEach((command) => {
@@ -75,9 +84,15 @@ client.on(Events.InteractionCreate, async (interaction: Interaction) => {
   } catch (error) {
     console.error(error);
     if (interaction.replied || interaction.deferred) {
-      await interaction.followUp({ content: 'There was an error while executing this command!', ephemeral: true });
+      await interaction.followUp({
+        content: "There was an error while executing this command!",
+        ephemeral: true,
+      });
     } else {
-      await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+      await interaction.reply({
+        content: "There was an error while executing this command!",
+        ephemeral: true,
+      });
     }
   }
 });

@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "start": "ts-node index.ts",
-    "lint": "eslint . --ext .ts"
+    "lint": "eslint . --ext .ts",
+    "format": "yarn prettier . --write"
   },
   "dependencies": {
     "discord.js": "^14.15.3",
@@ -13,6 +14,7 @@
     "typescript": "^5.5.4"
   },
   "devDependencies": {
-    "eslint": "^9.9.0"
+    "eslint": "^9.9.0",
+    "prettier": "3.3.3"
   }
 }
